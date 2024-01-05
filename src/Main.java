@@ -272,8 +272,12 @@ class WestminsterShoppingManager implements ShoppingManager {
 
 // Main class for console menu implementation
 public class Main {
-    private static final String WINDOW_TITLE = "Westminster Shopping Manager Menu";
-
+    private static final String WINDOW_TITLE = "Westminster Shopping Center";
+    private static final String[] COLUMN_NAMES = {"Product ID",
+            "Name",
+            "Category",
+            "Price",
+            "Info"};
     public static void main(String[] args) {
         WestminsterShoppingManager shoppingManager = new WestminsterShoppingManager();
         Scanner scanner = new Scanner(System.in);
@@ -369,11 +373,6 @@ public class Main {
     }
 
     private static void initGui() {
-        String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
 
         Object[][] data = {
                 {"Kathy", "Smith",
@@ -390,9 +389,12 @@ public class Main {
 
 
         JFrame f = new JFrame(WINDOW_TITLE);
-        final JPanel mainPanel = new JPanel(new FlowLayout());
-        final JPanel headerPanel = new JPanel();
+        final JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        final JPanel headerPanel = new JPanel(new FlowLayout());
         final JPanel tablePanel = new JPanel();
+        final JPanel detailPanel = new JPanel();
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
 
         JLabel label1 = new JLabel("Select product category: ");
         String[] choices = {"All", "Electronics", "Clothing"};
@@ -403,6 +405,12 @@ public class Main {
         headerPanel.add(label1);
         headerPanel.add(cb);
 
+        JTable table = new JTable(data, COLUMN_NAMES);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+
+        tablePanel.add(scrollPane);
+
         // Add all sub-panels to the main panel
         mainPanel.add(headerPanel);
         mainPanel.add(tablePanel);
@@ -410,13 +418,11 @@ public class Main {
         // Add main panel to frame
         f.add(mainPanel);
 
-        JTable table = new JTable(data, columnNames);
-        JScrollPane scrollPane = new JScrollPane(table);
-        table.setFillsViewportHeight(true);
-
-        tablePanel.add(scrollPane);
-
         cb.setVisible(true);
         f.setVisible(true);
+    }
+
+    private static void updateDetailsPanel(JPanel detailsPanel) {
+
     }
 }
