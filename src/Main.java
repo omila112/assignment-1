@@ -146,7 +146,10 @@ public class Main {
 
         JTable table = new JTable(data, COLUMN_NAMES);
         JScrollPane scrollPane = new JScrollPane(table);
+        table.getColumnModel().getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setFillsViewportHeight(true);
+
+        table.getColumnModel();
 
         tablePanel.add(scrollPane);
 
