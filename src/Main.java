@@ -8,6 +8,164 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+// Main class for console menu implementation
+public class Main {
+    private static final String WINDOW_TITLE = "Westminster Shopping Center";
+    private static final String[] COLUMN_NAMES = {"Product ID",
+            "Name",
+            "Category",
+            "Price",
+            "Info"
+    };
+    public static void main(String[] args) {
+        WestminsterShoppingManager shoppingManager = new WestminsterShoppingManager();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            initGui();
+            System.out.println("===== Westminster Shopping Manager Menu =====");
+            System.out.println("1. Add a new product");
+            System.out.println("2. Delete a product");
+            System.out.println("3. Print product list");
+            System.out.println("4. Save product list to file");
+            System.out.println("5. Load product list from file");
+            System.out.println("6. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    // Add a new product
+                    System.out.println("Select product type: 1. Electronics 2. Clothing");
+                    int productType = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    System.out.print("Enter product ID: ");
+                    String productId = scanner.nextLine();
+                    System.out.print("Enter product name: ");
+                    String productName = scanner.nextLine();
+                    System.out.print("Enter available items: ");
+                    int availableItems = scanner.nextInt();
+                    System.out.print("Enter price: ");
+                    double price = scanner.nextDouble();
+                    scanner.nextLine(); // Consume newline
+
+                    if (productType == 1) {
+                        // Electronics
+                        System.out.print("Enter brand: ");
+                        String brand = scanner.nextLine();
+                        System.out.print("Enter warranty period: ");
+                        int warrantyPeriod = scanner.nextInt();
+
+                        Electronics electronics = new Electronics(productId, productName, availableItems, price, brand, warrantyPeriod);
+                        shoppingManager.addProductToSystem(electronics);
+                    } else if (productType == 2) {
+                        // Clothing
+                        System.out.print("Enter size: ");
+                        String size = scanner.nextLine();
+                        System.out.print("Enter color: ");
+                        String color = scanner.nextLine();
+
+                        Clothing clothing = new Clothing(productId, productName, availableItems, price, size, color);
+                        shoppingManager.addProductToSystem(clothing);
+                    }
+                    break;
+
+                case 2:
+                    // Delete a product
+                    System.out.print("Enter product ID to delete: ");
+                    String deleteProductId = scanner.nextLine();
+                    shoppingManager.deleteProductFromSystem(deleteProductId);
+                    break;
+
+                case 3:
+                    // Print product list
+                    shoppingManager.printProductList();
+                    break;
+
+                case 4:
+                    // Save product list to file
+                    System.out.print("Enter file name to save: ");
+                    String saveFileName = scanner.nextLine();
+                    shoppingManager.saveToFile(saveFileName);
+                    break;
+
+                case 5:
+                    // Load product list from file
+                    System.out.print("Enter file name to load: ");
+                    String loadFileName = scanner.nextLine();
+                    shoppingManager.readFromFile(loadFileName);
+                    break;
+
+                case 6:
+                    // Exit
+                    System.out.println("Exiting Westminster Shopping Manager. Goodbye!");
+                    System.exit(0);
+
+                default:
+                    System.out.println("Invalid choice. Please enter a valid option.");
+                    break;
+            }
+        }
+    }
+
+    private static void initGui() {
+
+        Object[][] data = {
+                {"Kathy", "Smith",
+                        "Snowboarding", 5, false},
+                {"John", "Doe",
+                        "Rowing", 3, true},
+                {"Sue", "Black",
+                        "Knitting", 2, false},
+                {"Jane", "White",
+                        "Speed reading", 20, true},
+                {"Joe", "Brown",
+                        "Pool", 10, false}
+        };
+
+
+        JFrame f = new JFrame(WINDOW_TITLE);
+        final JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        final JPanel headerPanel = new JPanel(new FlowLayout());
+        final JPanel tablePanel = new JPanel();
+        final JPanel detailPanel = new JPanel();
+        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
+
+        JLabel label1 = new JLabel("Select product category: ");
+        String[] choices = {"All", "Electronics", "Clothing"};
+        final JComboBox<String> cb = new JComboBox<>(choices);
+        f.setSize(800, 600);
+        f.setLocation(600,600);
+
+        headerPanel.add(label1);
+        headerPanel.add(cb);
+
+        JTable table = new JTable(data, COLUMN_NAMES);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+
+        tablePanel.add(scrollPane);
+
+        // Add all sub-panels to the main panel
+        mainPanel.add(headerPanel);
+        mainPanel.add(tablePanel);
+
+        // Add main panel to frame
+        f.add(mainPanel);
+
+        cb.setVisible(true);
+        f.setVisible(true);
+    }
+
+    private static void updateDetailsPanel(JPanel detailsPanel) {
+
+    }
+}
+
 // Abstract class Product
 abstract class Product implements Serializable {
     private String productId;
@@ -270,159 +428,3 @@ class WestminsterShoppingManager implements ShoppingManager {
     }
 }
 
-// Main class for console menu implementation
-public class Main {
-    private static final String WINDOW_TITLE = "Westminster Shopping Center";
-    private static final String[] COLUMN_NAMES = {"Product ID",
-            "Name",
-            "Category",
-            "Price",
-            "Info"};
-    public static void main(String[] args) {
-        WestminsterShoppingManager shoppingManager = new WestminsterShoppingManager();
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            initGui();
-            System.out.println("===== Westminster Shopping Manager Menu =====");
-            System.out.println("1. Add a new product");
-            System.out.println("2. Delete a product");
-            System.out.println("3. Print product list");
-            System.out.println("4. Save product list to file");
-            System.out.println("5. Load product list from file");
-            System.out.println("6. Exit");
-
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1:
-                    // Add a new product
-                    System.out.println("Select product type: 1. Electronics 2. Clothing");
-                    int productType = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-
-                    System.out.print("Enter product ID: ");
-                    String productId = scanner.nextLine();
-                    System.out.print("Enter product name: ");
-                    String productName = scanner.nextLine();
-                    System.out.print("Enter available items: ");
-                    int availableItems = scanner.nextInt();
-                    System.out.print("Enter price: ");
-                    double price = scanner.nextDouble();
-                    scanner.nextLine(); // Consume newline
-
-                    if (productType == 1) {
-                        // Electronics
-                        System.out.print("Enter brand: ");
-                        String brand = scanner.nextLine();
-                        System.out.print("Enter warranty period: ");
-                        int warrantyPeriod = scanner.nextInt();
-
-                        Electronics electronics = new Electronics(productId, productName, availableItems, price, brand, warrantyPeriod);
-                        shoppingManager.addProductToSystem(electronics);
-                    } else if (productType == 2) {
-                        // Clothing
-                        System.out.print("Enter size: ");
-                        String size = scanner.nextLine();
-                        System.out.print("Enter color: ");
-                        String color = scanner.nextLine();
-
-                        Clothing clothing = new Clothing(productId, productName, availableItems, price, size, color);
-                        shoppingManager.addProductToSystem(clothing);
-                    }
-                    break;
-
-                case 2:
-                    // Delete a product
-                    System.out.print("Enter product ID to delete: ");
-                    String deleteProductId = scanner.nextLine();
-                    shoppingManager.deleteProductFromSystem(deleteProductId);
-                    break;
-
-                case 3:
-                    // Print product list
-                    shoppingManager.printProductList();
-                    break;
-
-                case 4:
-                    // Save product list to file
-                    System.out.print("Enter file name to save: ");
-                    String saveFileName = scanner.nextLine();
-                    shoppingManager.saveToFile(saveFileName);
-                    break;
-
-                case 5:
-                    // Load product list from file
-                    System.out.print("Enter file name to load: ");
-                    String loadFileName = scanner.nextLine();
-                    shoppingManager.readFromFile(loadFileName);
-                    break;
-
-                case 6:
-                    // Exit
-                    System.out.println("Exiting Westminster Shopping Manager. Goodbye!");
-                    System.exit(0);
-
-                default:
-                    System.out.println("Invalid choice. Please enter a valid option.");
-                    break;
-            }
-        }
-    }
-
-    private static void initGui() {
-
-        Object[][] data = {
-                {"Kathy", "Smith",
-                        "Snowboarding", 5, false},
-                {"John", "Doe",
-                        "Rowing", 3, true},
-                {"Sue", "Black",
-                        "Knitting", 2, false},
-                {"Jane", "White",
-                        "Speed reading", 20, true},
-                {"Joe", "Brown",
-                        "Pool", 10, false}
-        };
-
-
-        JFrame f = new JFrame(WINDOW_TITLE);
-        final JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        final JPanel headerPanel = new JPanel(new FlowLayout());
-        final JPanel tablePanel = new JPanel();
-        final JPanel detailPanel = new JPanel();
-        detailPanel.setLayout(new BoxLayout(detailPanel, BoxLayout.Y_AXIS));
-
-        JLabel label1 = new JLabel("Select product category: ");
-        String[] choices = {"All", "Electronics", "Clothing"};
-        final JComboBox<String> cb = new JComboBox<>(choices);
-        f.setSize(800, 600);
-        f.setLocation(600,600);
-
-        headerPanel.add(label1);
-        headerPanel.add(cb);
-
-        JTable table = new JTable(data, COLUMN_NAMES);
-        JScrollPane scrollPane = new JScrollPane(table);
-        table.setFillsViewportHeight(true);
-
-        tablePanel.add(scrollPane);
-
-        // Add all sub-panels to the main panel
-        mainPanel.add(headerPanel);
-        mainPanel.add(tablePanel);
-
-        // Add main panel to frame
-        f.add(mainPanel);
-
-        cb.setVisible(true);
-        f.setVisible(true);
-    }
-
-    private static void updateDetailsPanel(JPanel detailsPanel) {
-
-    }
-}
