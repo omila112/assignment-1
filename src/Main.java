@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -268,11 +272,14 @@ class WestminsterShoppingManager implements ShoppingManager {
 
 // Main class for console menu implementation
 public class Main {
+    private static final String WINDOW_TITLE = "Westminster Shopping Manager Menu";
+
     public static void main(String[] args) {
         WestminsterShoppingManager shoppingManager = new WestminsterShoppingManager();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            initGui();
             System.out.println("===== Westminster Shopping Manager Menu =====");
             System.out.println("1. Add a new product");
             System.out.println("2. Delete a product");
@@ -359,5 +366,57 @@ public class Main {
                     break;
             }
         }
+    }
+
+    private static void initGui() {
+        String[] columnNames = {"First Name",
+                "Last Name",
+                "Sport",
+                "# of Years",
+                "Vegetarian"};
+
+        Object[][] data = {
+                {"Kathy", "Smith",
+                        "Snowboarding", 5, false},
+                {"John", "Doe",
+                        "Rowing", 3, true},
+                {"Sue", "Black",
+                        "Knitting", 2, false},
+                {"Jane", "White",
+                        "Speed reading", 20, true},
+                {"Joe", "Brown",
+                        "Pool", 10, false}
+        };
+
+
+        JFrame f = new JFrame(WINDOW_TITLE);
+        final JPanel mainPanel = new JPanel(new FlowLayout());
+        final JPanel headerPanel = new JPanel();
+        final JPanel tablePanel = new JPanel();
+
+        JLabel label1 = new JLabel("Select product category: ");
+        String[] choices = {"All", "Electronics", "Clothing"};
+        final JComboBox<String> cb = new JComboBox<>(choices);
+        f.setSize(800, 600);
+        f.setLocation(600,600);
+
+        headerPanel.add(label1);
+        headerPanel.add(cb);
+
+        // Add all sub-panels to the main panel
+        mainPanel.add(headerPanel);
+        mainPanel.add(tablePanel);
+
+        // Add main panel to frame
+        f.add(mainPanel);
+
+        JTable table = new JTable(data, columnNames);
+        JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true);
+
+        tablePanel.add(scrollPane);
+
+        cb.setVisible(true);
+        f.setVisible(true);
     }
 }
