@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-
+//add products to 2d array and combine it with jpanel 
 // Main class for console menu implementation
 public class Main {
     private static final String WINDOW_TITLE = "Westminster Shopping Center";
@@ -32,11 +32,11 @@ public class Main {
             System.out.println("6. Exit");
 
             System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
+            string choice = scanner.next();
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
-                case 1:
+                case "1":
                     // Add a new product
                     System.out.println("Select product type: 1. Electronics 2. Clothing");
                     int productType = scanner.nextInt();
@@ -73,33 +73,33 @@ public class Main {
                     }
                     break;
 
-                case 2:
+                case "2":
                     // Delete a product
                     System.out.print("Enter product ID to delete: ");
                     String deleteProductId = scanner.nextLine();
                     shoppingManager.deleteProductFromSystem(deleteProductId);
                     break;
 
-                case 3:
+                case "3":
                     // Print product list
                     shoppingManager.printProductList();
                     break;
 
-                case 4:
+                case "4":
                     // Save product list to file
                     System.out.print("Enter file name to save: ");
                     String saveFileName = scanner.nextLine();
                     shoppingManager.saveToFile(saveFileName);
                     break;
 
-                case 5:
+                case "5":
                     // Load product list from file
                     System.out.print("Enter file name to load: ");
                     String loadFileName = scanner.nextLine();
                     shoppingManager.readFromFile(loadFileName);
                     break;
 
-                case 6:
+                case "6":
                     // Exit
                     System.out.println("Exiting Westminster Shopping Manager. Goodbye!");
                     System.exit(0);
