@@ -104,7 +104,7 @@ public class Main {
                     System.out.println("Exiting Westminster Shopping Manager. Goodbye!");
                     System.exit(0);
 
-                default:
+                default: //doesnt work
                     System.out.println("Invalid choice. Please enter a valid option.");
                     break;
             }
@@ -114,16 +114,16 @@ public class Main {
     private static void initGui() {
 
         Object[][] data = {
-                {"Kathy", "Smith",
-                        "Snowboarding", 5, false},
-                {"John", "Doe",
-                        "Rowing", 3, true},
-                {"Sue", "Black",
-                        "Knitting", 2, false},
-                {"Jane", "White",
-                        "Speed reading", 20, true},
-                {"Joe", "Brown",
-                        "Pool", 10, false}
+                {"a1", "tv",
+                        "electronics", 5, false},
+                {"b2", "phone",
+                        "electronics", 3, true},
+                {"c3", "plugs",
+                        "electronics", 2, false},
+                {"d4", "short",
+                        "clothing", 20, true},
+                {"e5", "shirt",
+                        "clothing", 10, false}
         };
 
 
